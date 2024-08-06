@@ -13,11 +13,11 @@
 
 import * as stringUtils from '../../core/utils/string.js';
 import * as Variables from '../../core/variables.js';
-import type {Block} from '../../core/block.js';
-import {CodeGenerator} from '../../core/generator.js';
-import {Names} from '../../core/names.js';
-import type {Workspace} from '../../core/workspace.js';
-import {inputTypes} from '../../core/inputs/input_types.js';
+import type { Block } from '../../core/block.js';
+import { CodeGenerator } from '../../core/generator.js';
+import { Names } from '../../core/names.js';
+import type { Workspace } from '../../core/workspace.js';
+import { inputTypes } from '../../core/inputs/input_types.js';
 
 /**
  * Order of operation ENUMs.
@@ -116,41 +116,41 @@ export class PythonGenerator extends CodeGenerator {
       // https://docs.python.org/3/reference/lexical_analysis.html#keywords
       // https://docs.python.org/2/reference/lexical_analysis.html#keywords
       'False,None,True,and,as,assert,break,class,continue,def,del,elif,else,' +
-        'except,exec,finally,for,from,global,if,import,in,is,lambda,nonlocal,' +
-        'not,or,pass,print,raise,return,try,while,with,yield,' +
-        // https://docs.python.org/3/library/constants.html
-        // https://docs.python.org/2/library/constants.html
-        'NotImplemented,Ellipsis,__debug__,quit,exit,copyright,license,credits,' +
-        // >>> print(','.join(sorted(dir(__builtins__))))
-        // https://docs.python.org/3/library/functions.html
-        // https://docs.python.org/2/library/functions.html
-        'ArithmeticError,AssertionError,AttributeError,BaseException,' +
-        'BlockingIOError,BrokenPipeError,BufferError,BytesWarning,' +
-        'ChildProcessError,ConnectionAbortedError,ConnectionError,' +
-        'ConnectionRefusedError,ConnectionResetError,DeprecationWarning,' +
-        'EOFError,Ellipsis,EnvironmentError,Exception,FileExistsError,' +
-        'FileNotFoundError,FloatingPointError,FutureWarning,GeneratorExit,' +
-        'IOError,ImportError,ImportWarning,IndentationError,IndexError,' +
-        'InterruptedError,IsADirectoryError,KeyError,KeyboardInterrupt,' +
-        'LookupError,MemoryError,ModuleNotFoundError,NameError,' +
-        'NotADirectoryError,NotImplemented,NotImplementedError,OSError,' +
-        'OverflowError,PendingDeprecationWarning,PermissionError,' +
-        'ProcessLookupError,RecursionError,ReferenceError,ResourceWarning,' +
-        'RuntimeError,RuntimeWarning,StandardError,StopAsyncIteration,' +
-        'StopIteration,SyntaxError,SyntaxWarning,SystemError,SystemExit,' +
-        'TabError,TimeoutError,TypeError,UnboundLocalError,UnicodeDecodeError,' +
-        'UnicodeEncodeError,UnicodeError,UnicodeTranslateError,UnicodeWarning,' +
-        'UserWarning,ValueError,Warning,ZeroDivisionError,_,__build_class__,' +
-        '__debug__,__doc__,__import__,__loader__,__name__,__package__,__spec__,' +
-        'abs,all,any,apply,ascii,basestring,bin,bool,buffer,bytearray,bytes,' +
-        'callable,chr,classmethod,cmp,coerce,compile,complex,copyright,credits,' +
-        'delattr,dict,dir,divmod,enumerate,eval,exec,execfile,exit,file,filter,' +
-        'float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,' +
-        'int,intern,isinstance,issubclass,iter,len,license,list,locals,long,' +
-        'map,max,memoryview,min,next,object,oct,open,ord,pow,print,property,' +
-        'quit,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,' +
-        'slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,' +
-        'vars,xrange,zip',
+      'except,exec,finally,for,from,global,if,import,in,is,lambda,nonlocal,' +
+      'not,or,pass,print,raise,return,try,while,with,yield,' +
+      // https://docs.python.org/3/library/constants.html
+      // https://docs.python.org/2/library/constants.html
+      'NotImplemented,Ellipsis,__debug__,quit,exit,copyright,license,credits,' +
+      // >>> print(','.join(sorted(dir(__builtins__))))
+      // https://docs.python.org/3/library/functions.html
+      // https://docs.python.org/2/library/functions.html
+      'ArithmeticError,AssertionError,AttributeError,BaseException,' +
+      'BlockingIOError,BrokenPipeError,BufferError,BytesWarning,' +
+      'ChildProcessError,ConnectionAbortedError,ConnectionError,' +
+      'ConnectionRefusedError,ConnectionResetError,DeprecationWarning,' +
+      'EOFError,Ellipsis,EnvironmentError,Exception,FileExistsError,' +
+      'FileNotFoundError,FloatingPointError,FutureWarning,GeneratorExit,' +
+      'IOError,ImportError,ImportWarning,IndentationError,IndexError,' +
+      'InterruptedError,IsADirectoryError,KeyError,KeyboardInterrupt,' +
+      'LookupError,MemoryError,ModuleNotFoundError,NameError,' +
+      'NotADirectoryError,NotImplemented,NotImplementedError,OSError,' +
+      'OverflowError,PendingDeprecationWarning,PermissionError,' +
+      'ProcessLookupError,RecursionError,ReferenceError,ResourceWarning,' +
+      'RuntimeError,RuntimeWarning,StandardError,StopAsyncIteration,' +
+      'StopIteration,SyntaxError,SyntaxWarning,SystemError,SystemExit,' +
+      'TabError,TimeoutError,TypeError,UnboundLocalError,UnicodeDecodeError,' +
+      'UnicodeEncodeError,UnicodeError,UnicodeTranslateError,UnicodeWarning,' +
+      'UserWarning,ValueError,Warning,ZeroDivisionError,_,__build_class__,' +
+      '__debug__,__doc__,__import__,__loader__,__name__,__package__,__spec__,' +
+      'abs,all,any,apply,ascii,basestring,bin,bool,buffer,bytearray,bytes,' +
+      'callable,chr,classmethod,cmp,coerce,compile,complex,copyright,credits,' +
+      'delattr,dict,dir,divmod,enumerate,eval,exec,execfile,exit,file,filter,' +
+      'float,format,frozenset,getattr,globals,hasattr,hash,help,hex,id,input,' +
+      'int,intern,isinstance,issubclass,iter,len,license,list,locals,long,' +
+      'map,max,memoryview,min,next,object,oct,open,ord,pow,print,property,' +
+      'quit,range,raw_input,reduce,reload,repr,reversed,round,set,setattr,' +
+      'slice,sorted,staticmethod,str,sum,super,tuple,type,unichr,unicode,' +
+      'vars,xrange,zip',
     );
   }
 
@@ -180,7 +180,7 @@ export class PythonGenerator extends CodeGenerator {
     for (let i = 0; i < devVarList.length; i++) {
       defvars.push(
         this.nameDB_.getName(devVarList[i], Names.DEVELOPER_VARIABLE_TYPE) +
-          ' = None',
+        ' = None',
       );
     }
 
@@ -190,7 +190,7 @@ export class PythonGenerator extends CodeGenerator {
       defvars.push(this.getVariableName(variables[i].getId()) + ' = None');
     }
 
-    this.definitions_['variables'] = defvars.join('\n');
+    //this.definitions_['variables'] = defvars.join('\n');
     this.isInitialized = true;
   }
 
