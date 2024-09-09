@@ -1,80 +1,93 @@
 # Blockly
 
-Google's Blockly is a library that adds a visual code editor to web and mobile apps. The Blockly editor uses interlocking, graphical blocks to represent code concepts like variables, logical expressions, loops, and more. It allows users to apply programming principles without having to worry about syntax or the intimidation of a blinking cursor on the command line. All code is free and open source.
+Google's Blockly is a web-based, visual programming editor. Users can drag
+blocks together to build programs. All code is free and open source.
 
-![](https://developers.google.com/blockly/images/sample.png)
+The source for this module is in the [Blockly repo](http://github.com/google/blockly).
 
-## Getting Started with Blockly
+## Example Usage
 
-Blockly has many resources for learning how to use the library. Start at our [Google Developers Site](https://developers.google.com/blockly) to read the documentation on how to get started, configure Blockly, and integrate it into your application. The developers site also contains links to:
+```js
+import * as Blockly from '../blockly/core';
+Blockly.inject('blocklyDiv', {
+    ...
+})
+```
 
-- [Getting Started article](https://developers.google.com/blockly/guides/get-started/web)
-- [Getting Started codelab](https://blocklycodelabs.dev/codelabs/getting-started/index.html#0)
-- [More codelabs](https://blocklycodelabs.dev/)
-- [Demos and plugins](https://google.github.io/blockly-samples/)
+## Samples
 
-Help us focus our development efforts by telling us [what you are doing with
-Blockly](https://developers.google.com/blockly/registration). The questionnaire only takes
-a few minutes and will help us better support the Blockly community.
+For samples on how to integrate Blockly into your project, view the list of samples at [blockly-samples](https://github.com/google/blockly-samples).
 
-### Installing Blockly
+## Installation
 
-Blockly is [available on npm](https://www.npmjs.com/package/blockly).
+You can install this package either via `npm` or `unpkg`.
+
+### unpkg
+
+```html
+<script src="https://unpkg.com/blockly/blockly.min.js"></script>
+```
+
+When importing from unpkg, you can access imports from the global namespace.
+
+```js
+// Access Blockly.
+Blockly.thing;
+// Access the default blocks.
+Blockly.Blocks['block_type'];
+// Access the javascript generator.
+javascript.javascriptGenerator;
+```
+
+### npm
 
 ```bash
 npm install blockly
 ```
 
-For more information on installing and using Blockly, see the [Getting Started article](https://developers.google.com/blockly/guides/get-started/web).
+## Imports
 
-### Getting Help
+Note: Using import of our package targets requires you to use a bundler (like webpack), since Blockly is packaged as a UMD, rather than an ESM.
 
-- [Report a bug](https://developers.google.com/blockly/guides/modify/contribute/write_a_good_issue) or file a feature request on GitHub
-- Ask a question, or search others' questions, on our [developer forum](https://groups.google.com/forum/#!forum/blockly). You can also drop by to say hello and show us your prototypes; collectively we have a lot of experience and can offer hints which will save you time. We actively monitor the forums and typically respond to questions within 2 working days.
-
-### blockly-samples
-
-We have a number of resources such as example code, demos, and plugins in another repository called [blockly-samples](https://github.com/google/blockly-samples/). A plugin is a self-contained piece of code that adds functionality to Blockly. Plugins can add fields, define themes, create renderers, and much more. For more information, see the [Plugins documentation](https://developers.google.com/blockly/guides/plugins/overview).
-
-## Contributing to Blockly
-
-Want to make Blockly better? We welcome contributions to Blockly in the form of pull requests, bug reports, documentation, answers on the forum, and more! Check out our [Contributing Guidelines](https://developers.google.com/blockly/guides/modify/contributing) for more information. You might also want to look for issues tagged "[Help Wanted](https://github.com/google/blockly/labels/help%20wanted)" which are issues we think would be great for external contributors to help with.
-
-## Releases
-
-We release by pushing the latest code to the master branch, followed by updating the npm package, our [docs](https://developers.google.com/blockly), and [demo pages](https://google.github.io/blockly-samples/). If there are breaking bugs, such as a crash when performing a standard action or a rendering issue that makes Blockly unusable, we will cherry-pick fixes to master between releases to fix them. The [releases page](https://github.com/google/blockly/releases) has a list of all releases.
-
-We use [semantic versioning](https://semver.org/). Releases that have breaking changes or are otherwise not backwards compatible will have a new major version. Patch versions are reserved for bug-fix patches between scheduled releases.
-
-We now have a [beta release on npm](https://www.npmjs.com/package/blockly?activeTab=versions). If you'd like to test the upcoming release, or try out a not-yet-released new API, you can use the beta channel with:
-
-```bash
-npm install blockly@beta
+```js
+// Import Blockly core.
+import * as Blockly from '../blockly/core';
+// Import the default blocks.
+import * as libraryBlocks from '../blockly/blocks';
+// Import a generator.
+import {javascriptGenerator} from '../blockly/javascript';
+// Import a message file.
+import * as En from '../blockly/msg/en';
 ```
 
-As it is a beta channel, it may be less stable, and the APIs there are subject to change.
+## Requires
 
-### Branches
+```js
+// Require Blockly core.
+const Blockly = require('blockly/core');
+// Require the default blocks.
+const libraryBlocks = require('blockly/blocks');
+// Require a generator.
+const {javascriptGenerator} = require('blockly/javascript');
+// Require a message file.
+const En = require('blockly/msg/en');
+```
 
-There are two main branches for Blockly.
+## Applying messages
 
-**[master](https://github.com/google/blockly)** - This is the (mostly) stable current release of Blockly.
+Once you have the message files, you also need to apply them.
 
-**[develop](https://github.com/google/blockly/tree/develop)** - This is where most of our work happens. Pull requests should always be made against develop. This branch will generally be usable, but may be less stable than the master branch. Once something is in develop we expect it to merge to master in the next release.
+```js
+Blockly.setLocal(En);
+```
 
-**other branches:** - Larger changes may have their own branches until they are good enough for people to try out. These will be developed separately until we think they are almost ready for release. These branches typically get merged into develop immediately after a release to allow extra time for testing.
+For a full list of supported Blockly locales, see: [https://github.com/google/blockly/tree/master/msg/js](https://github.com/google/blockly/tree/master/msg/js)
 
-### New APIs
+## Docs
 
-Once a new API is merged into master it is considered beta until the following release. We generally try to avoid changing an API after it has been merged to master, but sometimes we need to make changes after seeing how an API is used. If an API has been around for at least two releases we'll do our best to avoid breaking it.
+For more information about how to use Blockly, check out our
+[devsite](https://developers.google.com/blockly/guides/overview).
 
-Unreleased APIs may change radically. Anything that is in `develop` but not `master` is subject to change without warning.
+## License
 
-## Issues and Milestones
-
-We typically triage all bugs within 1 week, which includes adding any appropriate labels and assigning it to a milestone. Please keep in mind, we are a small team so even feature requests that everyone agrees on may not be prioritized.
-
-## Good to Know
-
-- Cross-browser Testing Platform and Open Source <3 Provided by [Sauce Labs](https://saucelabs.com)
-- We test browsers using [BrowserStack](https://browserstack.com)
+Apache 2.0
